@@ -302,7 +302,6 @@ def main():
         f.write(f"# {title}\n\n{body}")
     log(f"saved draft: {path} (model={model})")
     if publish:
-        urls = [f"https://{PAGES_HOST}{PAGES_PATH}"]
         ok = False
         if devto_publish(cfg, title, body):
             save_done(topic)
@@ -310,9 +309,8 @@ def main():
             ok = True
         tg_url = telegraph_publish(title, body)
         if tg_url:
-            urls.append(tg_url)
-        if ok or tg_url:
-            indexnow_submit(urls)
+            ok = True
+        indexnow_submit([f"https://{PAGES_HOST}{PAGES_PATH}"])
         return 0 if ok else 1
     return 0
 
