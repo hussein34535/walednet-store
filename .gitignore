@@ -1,0 +1,6 @@
+# Secrets — NEVER commit these (local machine only)
+config.json
+**/config.json
+*.log
+__pycache__/
+*.pyc

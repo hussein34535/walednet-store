@@ -1,0 +1,39 @@
+name: AutoPublish Dev.to
+
+on:
+  schedule:
+    - cron: "0 6 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Generate and publish article
+        run: python autopublisher/article_generator.py --publish
+        env:
+          ZENMUX_KEY: ${{ secrets.ZENMUX_KEY }}
+          DEVTO_KEY: ${{ secrets.DEVTO_KEY }}
+
+      - name: Commit drafts and history
+        run: |
+          git config user.name "autopublisher[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          if git diff --cached --quiet; then
+            echo "no changes to commit"
+          else
+            git commit -m "chore: publish article and update history"
+            git push
+          fi
