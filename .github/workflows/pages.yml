@@ -3,7 +3,7 @@ name: Deploy Landing Page
 on:
   push:
     branches: [main]
-    paths: ["product/**", ".github/workflows/pages.yml"]
+    paths: ["product/**", "*.jpg", ".github/workflows/pages.yml"]
   workflow_dispatch:
 
 permissions:
@@ -26,6 +26,7 @@ jobs:
         run: |
           mkdir -p _site
           cp product/landing.html _site/index.html
+          cp avatar.jpg _site/avatar.jpg
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
