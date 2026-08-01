@@ -34,7 +34,7 @@ TOPICS = [
     "12 free tools to start selling online before you spend $1",
 ]
 
-TAGS = ["productivity", "freelancing", "ai", "business", "webdev"]
+TAGS = ["productivity", "freelancing", "ai", "business"]
 
 MODELS = [
     "z-ai/glm-4.7-flash-free",
@@ -155,7 +155,7 @@ def devto_publish(cfg, title, body):
             "title": title,
             "published": True,
             "body_markdown": body,
-            "tags": TAGS,
+            "tags": TAGS[:4],
         }
     }).encode()
     req = urllib.request.Request(
