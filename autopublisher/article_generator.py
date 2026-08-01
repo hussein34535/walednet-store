@@ -15,6 +15,11 @@ LOG_PATH = os.path.join(BASE_DIR, "publisher.log")
 
 ZENMUX_URL = "https://zenmux.ai/api/v1/chat/completions"
 DEVTO_URL = "https://dev.to/api/articles"
+TELEGRAPH_URL = "https://api.telegra.ph"
+INDEXNOW_KEY = "walednetindex2026"
+PAGES_HOST = "hussein34535.github.io"
+PAGES_PATH = "/walednet-store/"
+TELEGRAPH_TOKEN_FILE = os.path.join(BASE_DIR, "telegraph_account.json")
 
 TOPICS = [
     "How to sell digital products online with zero ad budget in 2026",
@@ -145,6 +150,110 @@ def gen_article(cfg, topic):
     return title, body, model
 
 
+def telegraph_ensure_token():
+    try:
+        with open(TELEGRAPH_TOKEN_FILE, encoding="utf-8") as f:
+            tok = json.load(f).get("access_token")
+            if tok:
+                return tok
+    except OSError:
+        pass
+    payload = json.dumps({"short_name": "walednet", "author_name": "WaledNet Store"}).encode()
+    req = urllib.request.Request(
+        TELEGRAPH_URL + "/createAccount", data=payload,
+        headers={"Content-Type": "application/json"})
+    try:
+        with urllib.request.urlopen(req, timeout=30) as r:
+            d = json.loads(r.read().decode())
+        if d.get("ok"):
+            tok = d["result"]["access_token"]
+            with open(TELEGRAPH_TOKEN_FILE, "w", encoding="utf-8") as f:
+                json.dump({"access_token": tok}, f)
+            log("telegraph: new account created")
+            return tok
+        log("telegraph: account error: " + str(d.get("error")))
+    except Exception as e:
+        log(f"telegraph: account error: {e}")
+    return None
+
+
+def md_to_nodes(body):
+    nodes = []
+    para = []
+    for line in body.split("\n"):
+        s = line.strip()
+        if not s:
+            if para:
+                nodes.append({"tag": "p", "children": [" ".join(para)]})
+                para = []
+        elif s.startswith("## "):
+            if para:
+                nodes.append({"tag": "p", "children": [" ".join(para)]})
+                para = []
+            nodes.append({"tag": "h2", "children": [s[3:]]})
+        elif s.startswith("> "):
+            nodes.append({"tag": "blockquote", "children": [s[2:]]})
+        elif s == "---":
+            if para:
+                nodes.append({"tag": "p", "children": [" ".join(para)]})
+                para = []
+            nodes.append({"tag": "hr"})
+        elif "m3lmhermes_bot" in s:
+            before = s.split("m3lmhermes_bot")[0].rstrip(" -:") or "Open the store on Telegram"
+            nodes.append({"tag": "p", "children": [
+                before + " ",
+                {"tag": "a", "attrs": {"href": BOT_LINK}, "children": [BOT_LINK]},
+            ]})
+        else:
+            para.append(s)
+    if para:
+        nodes.append({"tag": "p", "children": [" ".join(para)]})
+    return nodes
+
+
+def telegraph_publish(title, body):
+    tok = telegraph_ensure_token()
+    if not tok:
+        return None
+    payload = json.dumps({
+        "access_token": tok,
+        "title": title,
+        "author_name": "WaledNet Store",
+        "content": md_to_nodes(body),
+    }).encode()
+    req = urllib.request.Request(
+        TELEGRAPH_URL + "/createPage", data=payload,
+        headers={"Content-Type": "application/json"})
+    try:
+        with urllib.request.urlopen(req, timeout=30) as r:
+            d = json.loads(r.read().decode())
+        if d.get("ok"):
+            url = d["result"]["url"]
+            log(f"telegraph: published '{title}' -> {url}")
+            return url
+        log("telegraph: createPage error: " + str(d.get("error")))
+    except Exception as e:
+        log(f"telegraph: error: {e}")
+    return None
+
+
+def indexnow_submit(urls):
+    payload = json.dumps({
+        "host": PAGES_HOST,
+        "key": INDEXNOW_KEY,
+        "urlList": urls,
+    }).encode()
+    req = urllib.request.Request(
+        "https://api.indexnow.org/indexnow", data=payload,
+        headers={"Content-Type": "application/json; charset=utf-8"})
+    try:
+        with urllib.request.urlopen(req, timeout=30) as r:
+            code = r.status
+        log(f"indexnow: submitted {len(urls)} urls (status {code})")
+    except Exception as e:
+        log(f"indexnow: error: {e}")
+
+
 def devto_publish(cfg, title, body):
     key = cfg.get("devto_key", "") or os.environ.get("DEVTO_KEY", "")
     if not key:
@@ -193,11 +302,18 @@ def main():
         f.write(f"# {title}\n\n{body}")
     log(f"saved draft: {path} (model={model})")
     if publish:
+        urls = [f"https://{PAGES_HOST}{PAGES_PATH}"]
+        ok = False
         if devto_publish(cfg, title, body):
             save_done(topic)
             log("topic marked as done")
-            return 0
-        return 1
+            ok = True
+        tg_url = telegraph_publish(title, body)
+        if tg_url:
+            urls.append(tg_url)
+        if ok or tg_url:
+            indexnow_submit(urls)
+        return 0 if ok else 1
     return 0
 
 
