@@ -3,46 +3,110 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>VPN Server Checker — $1</title>
+<title>SkillMint — منتجات رقمية بتوصلك فورًا | Digital Products, Instant Delivery</title>
+<meta name="description" content="SkillMint: AI prompt packs, ad templates, freelancing guides and store blueprints. Instant automatic delivery, USDT (TRC20) payment.">
 <style>
   * { margin:0; padding:0; box-sizing:border-box; font-family:'Segoe UI',Tahoma,Arial,sans-serif; }
-  body { background:#0f172a; color:#e2e8f0; min-height:100vh; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:24px; }
-  .card { background:#1e293b; border:1px solid #334155; border-radius:20px; max-width:560px; width:100%; padding:32px; text-align:center; box-shadow:0 20px 60px rgba(0,0,0,.5); }
-  .badge { display:inline-block; background:#22c55e; color:#052e16; font-weight:800; padding:6px 16px; border-radius:99px; font-size:13px; margin-bottom:16px; }
-  h1 { font-size:26px; margin-bottom:8px; color:#fff; }
-  .price { font-size:44px; font-weight:900; color:#4ade80; margin:16px 0 4px; }
-  .price span { font-size:16px; color:#94a3b8; font-weight:400; }
-  ul { text-align:right; margin:20px 0 24px; list-style:none; }
-  li { padding:8px 0; border-bottom:1px dashed #334155; font-size:15px; }
-  li::before { content:"✔️ "; margin-left:6px; }
-  .btn { display:block; background:#22c55e; color:#052e16; text-decoration:none; font-weight:800; font-size:18px; padding:14px; border-radius:12px; margin-top:8px; transition:.2s; }
-  .btn:hover { background:#4ade80; }
-  .note { margin-top:14px; font-size:12px; color:#64748b; }
-  .tech { margin-top:16px; font-size:12px; color:#475569; direction:ltr; }
+  body { background:#0f172a; color:#e2e8f0; min-height:100vh; padding:24px 16px 48px; }
+  .wrap { max-width:760px; margin:0 auto; }
+  header { text-align:center; padding:24px 0 8px; }
+  .logo { font-size:34px; font-weight:900; letter-spacing:2px; color:#fff; }
+  .logo span { color:#ffc531; }
+  .tagline { color:#94a3b8; font-size:14px; margin-top:6px; direction:ltr; }
+  .badge-row { display:flex; justify-content:center; gap:10px; flex-wrap:wrap; margin:18px 0 6px; }
+  .badge { background:#1e293b; border:1px solid #334155; color:#cbd5e1; font-size:12px; padding:6px 14px; border-radius:99px; }
+  .hero h1 { font-size:26px; color:#fff; text-align:center; margin:18px 0 8px; }
+  .hero p { text-align:center; color:#94a3b8; font-size:15px; max-width:560px; margin:0 auto; }
+  .grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-top:28px; }
+  @media (max-width:560px) { .grid { grid-template-columns:1fr; } }
+  .card { background:#1e293b; border:1px solid #334155; border-radius:16px; padding:20px; display:flex; flex-direction:column; }
+  .card .cat { font-size:11px; color:#ffc531; font-weight:700; letter-spacing:1px; }
+  .card h3 { font-size:16px; color:#fff; margin:8px 0 6px; }
+  .card p { font-size:13px; color:#94a3b8; flex:1; }
+  .card .price { font-size:24px; font-weight:900; color:#4ade80; margin:12px 0 10px; }
+  .card .price small { font-size:12px; color:#64748b; font-weight:400; }
+  .card a { display:block; background:#6c2bd9; color:#fff; text-align:center; text-decoration:none; font-weight:800; font-size:14px; padding:11px; border-radius:10px; transition:.2s; }
+  .card a:hover { background:#7c3aed; }
+  .cta { text-align:center; margin-top:28px; }
+  .btn-big { display:inline-block; background:#ffc531; color:#0f172a; font-weight:900; font-size:18px; padding:16px 42px; border-radius:14px; text-decoration:none; box-shadow:0 10px 30px rgba(255,197,66,.25); transition:.2s; }
+  .btn-big:hover { background:#ffd35e; }
+  .cta p { color:#94a3b8; font-size:13px; margin-top:12px; }
+  .wallet { margin-top:26px; background:#1e293b; border:1px dashed #334155; border-radius:14px; padding:16px; text-align:center; font-size:13px; }
+  .wallet b { color:#ffc531; }
+  .wallet .addr { display:inline-block; background:#0f172a; padding:8px 12px; border-radius:8px; font-family:Consolas,monospace; font-size:12px; color:#4ade80; word-break:break-all; margin-top:8px; }
+  .wallet small { color:#64748b; display:block; margin-top:8px; font-size:11px; }
+  .free { margin-top:20px; background:linear-gradient(135deg,#0e2a1e,#0f172a); border:1px solid #166534; border-radius:14px; padding:18px; text-align:center; }
+  .free h3 { color:#4ade80; font-size:16px; }
+  .free p { color:#94a3b8; font-size:13px; margin-top:6px; }
+  .free a { color:#ffc531; font-weight:700; }
+  footer { text-align:center; color:#475569; font-size:12px; margin-top:30px; direction:ltr; }
 </style>
 </head>
 <body>
-  <div class="card">
-    <span class="badge">تسليم فوري — ملف exe يعمل مباشرة</span>
-    <h1>VPN Server Checker</h1>
-    <p style="color:#94a3b8;">افحص سيرفرات VLESS / VMESS / TROJAN / SS — اعرف الشغال من الميت في ثواني</p>
-    <div class="price">$1 <span>فقط — دفعة واحدة</span></div>
-    <ul>
-      <li>اختبار آلاف السيرفرات بالتوازي (حتى 20 بثقة في نفس الوقت)</li>
-      <li>يدعم vless:// و vmess:// و ss:// و trojan://</li>
-      <li>قياس سرعة الاتصال (ms) لكل سيرفر</li>
-      <li>يصدّر لك ملف السيرفرات الشغالة جاهز للصقه في v2rayNG / WaledNet</li>
-      <li>يعمل على ويندوز 7/10/11 بدون تثبيت</li>
-      <li>واجهة بسيطة: الصق اللينكات وابدأ</li>
-    </ul>
-    <a class="btn" href="PASTE_YOUR_GUMROAD_OR_PAYPAL_LINK_HERE" target="_blank">اشترِ الآن بـ $1 — Gumroad / PayPal</a>
-    <p class="note">استبدل الرابط أعلاه برابط حسابك ثم انشر هذه الصفحة</p>
-    <div style="margin-top:14px; padding:12px; background:#0f172a; border:1px dashed #334155; border-radius:12px; font-size:13px;">
-      💰 <b>أو ادفع USDT مباشرة (TRC20):</b><br>
-      <span style="direction:ltr; display:inline-block; background:#1e293b; padding:6px 10px; border-radius:8px; font-family:Consolas,monospace; font-size:12px; word-break:break-all; color:#4ade80;">TYttvFzzzx8Kx9V2PdpoYtTboLpboqtYfH</span><br>
-      <span style="font-size:11px; color:#94a3b8;">بعد التحويل ابعت سكرين شوت على الخاص وتسلم الأداة فورًا</span>
+<div class="wrap">
+  <header>
+    <div class="logo">SKILL<span>MINT</span></div>
+    <div class="tagline">Digital Products · Instant Delivery · USDT</div>
+    <div class="badge-row">
+      <span class="badge">⚡ تسليم فوري تلقائي</span>
+      <span class="badge">💰 دفع USDT (TRC20)</span>
+      <span class="badge">🤝 إحالة 20%</span>
     </div>
-    <p class="tech">vpn_checker.exe — Windows x64 — SHA-256 verified</p>
+  </header>
+
+  <section class="hero">
+    <h1>منتجات رقمية تبدأ بيها رحلتك للمال عبر الإنترنت</h1>
+    <p>افتح المتجر على تيليجرام، اختار منتجك، ادفع USDT — والملف بيوصل في المحادثة فورًا بدون تدخل بشري.</p>
+  </section>
+
+  <section class="grid">
+    <div class="card">
+      <div class="cat">AD PACK</div>
+      <h3>20 Ad Templates Pack</h3>
+      <p>20 إعلان جاهز للنشر للمنتجات الرقمية — هوكس، عروض، ودعوات فعل</p>
+      <div class="price">$2.99</div>
+      <a href="https://t.me/m3lmhermes_bot">اطلبه من المتجر</a>
+    </div>
+    <div class="card">
+      <div class="cat">AI PROMPTS</div>
+      <h3>AI Prompts Mega Pack (150+)</h3>
+      <p>150+ برومبت جاهز لـ ChatGPT و Claude — تسويق، كتابة، كود، دراسة</p>
+      <div class="price">$4.99</div>
+      <a href="https://t.me/m3lmhermes_bot">اطلبه من المتجر</a>
+    </div>
+    <div class="card">
+      <div class="cat">FREELANCING</div>
+      <h3>Freelance Starter Guide 2026</h3>
+      <p>دليل 30 يوم لأول عميل يدفع — اختيار المهارة، التسعير، وسكربتات التواصل</p>
+      <div class="price">$4.99</div>
+      <a href="https://t.me/m3lmhermes_bot">اطلبه من المتجر</a>
+    </div>
+    <div class="card">
+      <div class="cat">BLUEPRINT</div>
+      <h3>USDT Telegram Store Blueprint</h3>
+      <p>البلوبرينت الكامل لمتجر USDT آلي على تيليجرام — من الصفر للتشغيل</p>
+      <div class="price">$9.99</div>
+      <a href="https://t.me/m3lmhermes_bot">اطلبه من المتجر</a>
+    </div>
+  </section>
+
+  <div class="cta">
+    <a class="btn-big" href="https://t.me/m3lmhermes_bot" target="_blank">افتح المتجر على تيليجرام 🤖</a>
+    <p>الدخول بالضغط مرة واحدة — بدون تسجيل</p>
   </div>
+
+  <div class="free">
+    <h3>🎁 هدية مجانية: نصائح البدء</h3>
+    <p>أول ما تكتب للبوت، هتوصلك نصائح عملية مجانية قبل أي شراء. ابدأ بها: <a href="https://t.me/m3lmhermes_bot">t.me/m3lmhermes_bot</a></p>
+  </div>
+
+  <div class="wallet">
+    <b>💰 تفضل الدفع المباشر؟</b> حول على محفظة المتجر (USDT · TRC20) وابعت سكرين شوت في البوت:
+    <span class="addr">TYttvFzzzx8Kx9V2PdpoYtTboLpboqtYfH</span>
+    <small>التسليم الفوري التلقائي يبدأ فور تأكيد التحويل على السلسلة</small>
+  </div>
+
+  <footer>SKILLMINT © 2026 · Automated by WaledNet Holding</footer>
+</div>
 </body>
 </html>
