@@ -30,3 +30,4 @@ How to build a $0-cost automated store with a Telegram bot
 How to deliver digital downloads automatically with no backend
 What I learned running a store that never sleeps
 How to get your first paying freelancing client in 30 days
+Selling ebooks and templates on autopilot: a practical setup
